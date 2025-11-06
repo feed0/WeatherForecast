@@ -11,10 +11,14 @@ struct DayForecastView: View {
     
     // MARK: - Properties
     
+    // MARK: stored properties
+    
     let day: String
     let isRainy: Bool
     let high: Int
     let low: Int
+    
+    // MARK: computed properties
     
     var iconName: String {
         if isRainy {
@@ -44,26 +48,53 @@ struct DayForecastView: View {
     
     var body: some View {
         VStack {
-            Text(day)
-                .font(Font.largeTitle)
+            dayOfTheWeekTextSubview
+            weatherConditionIconSubview
             
-            Image(systemName: iconName)
-                .foregroundStyle(iconColor)
-                .padding(5)
-            
-            VStack(alignment: .trailing) {
-                Text("High: \(high)º")
-                    .fontWeight(Font.Weight.semibold)
-                    .foregroundStyle(highTemperatureColor)
-                
-                Text("Low: \(low)º")
-                    .fontWeight(Font.Weight.medium)
-                    .foregroundStyle(Color.secondary)
-            }
-            
+            highAndLowTemperaturesOfTheDaySubview
         }
         .padding()
     }
+    
+    // MARK: - Subviews
+    
+    @ViewBuilder
+    private var dayOfTheWeekTextSubview: some View {
+        Text(day)
+            .font(Font.largeTitle)
+    }
+    
+    @ViewBuilder
+    private var weatherConditionIconSubview: some View {
+        Image(systemName: iconName)
+            .foregroundStyle(iconColor)
+            .padding(5)
+    }
+    
+    @ViewBuilder
+    private var highAndLowTemperaturesOfTheDaySubview:some View {
+        VStack(alignment: .trailing) {
+            highTemperatureOfTheDaySubview
+            lowTemperatureOfTheDaySubview
+        }
+    }
+    
+    @ViewBuilder
+    private var highTemperatureOfTheDaySubview: some View {
+        Text("High: \(high)º")
+            .fontWeight(Font.Weight.semibold)
+            .foregroundStyle(highTemperatureColor)
+
+    }
+    
+    @ViewBuilder
+    private var lowTemperatureOfTheDaySubview: some View {
+        Text("Low: \(low)º")
+            .fontWeight(Font.Weight.medium)
+            .foregroundStyle(Color.secondary)
+
+    }
+    
 }
 
 // MARK: - Preview
